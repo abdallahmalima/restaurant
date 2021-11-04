@@ -81,7 +81,7 @@ class FooterDescController extends Controller
             FooterDesc::create(['description'=>$request->input('description')]);
         }
 
-        return redirect()->route('footer_descs.edit')->withSuccess('Updated Successfuly');
+        return redirect()->route('footer_descs.edit')->withSuccess('Updated Successfully');
     }
 
     /**

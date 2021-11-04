@@ -46,9 +46,7 @@
  
  
 </table>
-@if(Auth::user()->image)
-<img src="{{ asset(Auth::user()->image->url) }}" alt="..." height="250px" weight="100px" class="img-thumbnail">
- @endif
+
 </body>
 </html>
 

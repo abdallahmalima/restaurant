@@ -51,7 +51,7 @@ class FsectionController extends Controller
         if($request->hasFile('image')){
             $fsection->image()->create(['url'=>$request->file('image')->store('images','public')]);
         }
-        return redirect()->route('fsections.create')->with('fsection',$fsection)->withSuccess('Created Successfuly');
+        return redirect()->route('fsections.create')->with('fsection',$fsection)->withSuccess('Created Successfully');
     }
 
     /**
@@ -105,7 +105,7 @@ class FsectionController extends Controller
             }
         }
        
-        return redirect()->route('fsections.edit',$fsection)->with('fsection',$fsection)->withSuccess('Updated Successfuly');
+        return redirect()->route('fsections.edit',$fsection)->with('fsection',$fsection)->withSuccess('Updated Successfully');
  
     }
 
@@ -120,6 +120,6 @@ class FsectionController extends Controller
         //
         $this->deleteFile($fsection->image->url??null);
          $fsection->delete();
-        return redirect()->route('fsections.index')->withSuccess('Deleted Successfuly');
+        return redirect()->route('fsections.index')->withSuccess('Deleted Successfully');
     }
 }

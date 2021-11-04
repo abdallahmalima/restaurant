@@ -46,9 +46,7 @@
  
  
 </table>
-<?php if(Auth::user()->image): ?>
-<img src="<?php echo e(asset(Auth::user()->image->url)); ?>" alt="..." height="250px" weight="100px" class="img-thumbnail">
- <?php endif; ?>
+
 </body>
 </html>
 

@@ -81,7 +81,7 @@ class FooterSubController extends Controller
             FooterSub::create(['description'=>$request->input('description')]);
         }
 
-        return redirect()->route('footer_subs.edit')->withSuccess('Updated Successfuly');
+        return redirect()->route('footer_subs.edit')->withSuccess('Updated Successfully');
     }
 
     /**

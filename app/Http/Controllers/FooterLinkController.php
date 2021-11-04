@@ -45,7 +45,7 @@ class FooterLinkController extends Controller
         ]);
 
         FooterLink::create($request->only('name','url'));
-        return redirect()->route('footer_links.create')->withSuccess('Created Successfuly');
+        return redirect()->route('footer_links.create')->withSuccess('Created Successfully');
     }
 
     /**
@@ -88,7 +88,7 @@ class FooterLinkController extends Controller
           ]);
 
         $footer_link->update($request->only('name','url'));
-        return redirect()->route('footer_links.edit',$footer_link)->with('footer_link',$footer_link)->withSuccess('Updated Successfuly');
+        return redirect()->route('footer_links.edit',$footer_link)->with('footer_link',$footer_link)->withSuccess('Updated Successfully');
     }
 
     /**
@@ -100,6 +100,6 @@ class FooterLinkController extends Controller
     public function destroy(FooterLink $footer_link)
     {
        $footer_link->delete();
-       return redirect()->route('footer_links.index')->withSuccess('Deleted Successfuly');
+       return redirect()->route('footer_links.index')->withSuccess('Deleted Successfully');
     }
 }

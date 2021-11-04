@@ -52,7 +52,7 @@ class BlogController extends Controller
         if($request->hasFile('image')){
            $blog->image()->create(['url'=>$request->file('image')->store('images','public')]);
         }
-        return redirect()->route('blogs.create')->withSuccess('Created Successfuly');
+        return redirect()->route('blogs.create')->withSuccess('Created Successfully');
     }
 
     /**
@@ -107,7 +107,7 @@ class BlogController extends Controller
            
         }
        
-        return redirect()->route('blogs.edit',$blog)->with('blog',$blog)->withSuccess('Updated Successfuly');
+        return redirect()->route('blogs.edit',$blog)->with('blog',$blog)->withSuccess('Updated Successfully');
  
     }
 
@@ -122,6 +122,6 @@ class BlogController extends Controller
         //
         $this->deleteFile($blog->image->url??null);
         $blog->delete();
-        return redirect()->route('blogs.index')->withSuccess('Deleted Successfuly');
+        return redirect()->route('blogs.index')->withSuccess('Deleted Successfully');
     }
 }

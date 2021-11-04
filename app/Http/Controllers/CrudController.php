@@ -45,7 +45,7 @@ class CrudController extends Controller
         ]);
 
         $data=Crud::create($request->all());
-        return redirect()->route('cruds.create')->with('data',$data)->withSuccess('Created Successfuly');
+        return redirect()->route('cruds.create')->with('data',$data)->withSuccess('Created Successfully');
     }
 
     /**
@@ -89,7 +89,7 @@ class CrudController extends Controller
           ]);
 
         $data=$crud->update($request->only('title','description'));
-        return redirect()->route('cruds.edit',$crud)->with('crud',$data)->withSuccess('Updated Successfuly');
+        return redirect()->route('cruds.edit',$crud)->with('crud',$data)->withSuccess('Updated Successfully');
     }
 
     /**
@@ -103,6 +103,6 @@ class CrudController extends Controller
         
        
        $crud->delete();
-       return redirect()->route('cruds.index')->with('crud',$crud)->withSuccess('Deleted Successfuly');
+       return redirect()->route('cruds.index')->with('crud',$crud)->withSuccess('Deleted Successfully');
     }
 }

@@ -85,7 +85,7 @@ class FooterContactController extends Controller
             FooterContact::create($datas);
         }
 
-        return redirect()->route('footer_contacts.edit')->withSuccess('Updated Successfuly');
+        return redirect()->route('footer_contacts.edit')->withSuccess('Updated Successfully');
     }
 
     /**
