@@ -36,14 +36,15 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         
-        //
+        //validate inputs
         $request->validate([
             'name'=>['required','string','max:255'],
             'email'=>['required','email'],
             'message'=>['required','string','max:355'],
         ]);
-        
+        //store inputs
         Contact::create($request->only('name','email','message'));
+        //redirect to homepage
         return redirect('/');
     }
 

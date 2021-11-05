@@ -38,13 +38,14 @@ class CrudController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validate inputs
         $request->validate([
           'title'=>'required|string|max:255',
           'description'=>'required|string|max:255'
         ]);
-
-        $data=Crud::create($request->all());
+        //store inputs
+        $data=Crud::create($request->only('title','description'));
+        //redirect back to create form with success message
         return redirect()->route('cruds.create')->with('data',$data)->withSuccess('Created Successfully');
     }
 
@@ -81,14 +82,14 @@ class CrudController extends Controller
      */
     public function update(Request $request, Crud $crud)
     {
-        //
-        
+        //validate inputs
         $request->validate([
             'title'=>'required|string|max:255',
             'description'=>'required|string|max:255'
           ]);
-
+        //store inputs
         $data=$crud->update($request->only('title','description'));
+        //redirect back to edit form with success message
         return redirect()->route('cruds.edit',$crud)->with('crud',$data)->withSuccess('Updated Successfully');
     }
 
@@ -100,8 +101,6 @@ class CrudController extends Controller
      */
     public function destroy(Crud $crud)
     {
-        
-       
        $crud->delete();
        return redirect()->route('cruds.index')->with('crud',$crud)->withSuccess('Deleted Successfully');
     }

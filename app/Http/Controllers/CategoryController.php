@@ -37,12 +37,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $request->validate([
+        //validate inputs
+       $data= $request->validate([
           'name'=>'required|string|max:255',
         ]);
-
-        $category=Category::create($request->all());
+       //store inputs 
+        $category=Category::create($data);
+        //redirect back to create form with success massage
         return redirect()->route('categories.create')->with('category',$category)->withSuccess('Created Successfully');
     }
 
@@ -89,8 +90,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        
-       $category->delete();
+         $category->delete();
         return redirect()->route('categories.index')->with('Category',$category)->withSuccess('Deleted Successfully');
     }
 }

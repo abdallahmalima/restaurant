@@ -21,15 +21,18 @@ class CategoryGalleryController extends Controller
      */
     public function store(Request $request,Category $category)
     {
-        //
+        //validate inputs
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'image' => ['required','image'],
         ]);
+        //store inputs
          $gallery=$category->galleries()->create($request->only('name'));
+         //store image if exists
         if($request->hasFile('image')){
-            $gallery->image()->create(['url'=>$request->file('image')->store('images','public')]);
+            $this->storeImage($gallery);
          }
-         return redirect()->route('galleries.create',$gallery)->withSuccess('Created Successfuly');
+         //redirect back to create form with success message
+         return redirect()->route('galleries.create',$gallery)->withSuccess('Created Successfully');
     }
 }

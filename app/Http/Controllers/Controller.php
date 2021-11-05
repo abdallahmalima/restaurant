@@ -18,4 +18,19 @@ class Controller extends BaseController
             unlink($path);
         }
     }
+    protected function deleteWithImage($model){
+        $this->deleteFile($model->image->url??null);
+        $model->delete();
+    }
+    protected function updateImage($model){
+        if($model->image){
+            $this->deleteFile($model->image->url??null);
+            $model->image()->update(['url'=>request()->file('image')->store('images','public')]);
+        }else{
+            $model->image()->create(['url'=>request()->file('image')->store('images','public')]); 
+        }
+    }
+    protected function storeImage($model){
+        $model->image()->create(['url'=>request()->file('image')->store('images','public')]);
+    }
 }

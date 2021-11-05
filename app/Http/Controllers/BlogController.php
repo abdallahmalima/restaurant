@@ -40,18 +40,21 @@ class BlogController extends Controller
     public function store(Request $request)
     {
 
-        
+        //validate inputs
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:555'],
             'image' => ['required','image'],
         ]);
+        
+       //store input without image
+        $blog=Blog::create($request->only('title','description'));
 
-        $inputs=$request->only('title','description');
-        $blog=Blog::create($inputs);
+        //store image if input has image file
         if($request->hasFile('image')){
-           $blog->image()->create(['url'=>$request->file('image')->store('images','public')]);
+           $this->storeImage($blog);
         }
+        //redirect back to create form with success message
         return redirect()->route('blogs.create')->withSuccess('Created Successfully');
     }
 
@@ -87,27 +90,24 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        //
+        //validate inputs
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
             'image' => [ 'image'],
         ]);
       
-        $inputs=$request->only('title','description');
-        $blog->update($inputs);
+      //update inputs without image
+        $blog->update($request->only('title','description'));
         
+        //update image if exists
         if($request->hasFile('image')){
-            if($blog->image){
-                $this->deleteFile($blog->image->url??null);
-                $blog->image()->update(['url'=>$request->file('image')->store('images','public')]);
-            }else{
-                $blog->image()->create(['url'=>$request->file('image')->store('images','public')]); 
-            }
+           $this->updateImage($blog);
            
         }
        
-        return redirect()->route('blogs.edit',$blog)->with('blog',$blog)->withSuccess('Updated Successfully');
+        //redirect back to edit form with success message
+        return redirect()->route('blogs.edit',$blog)->with(compact('blog'))->withSuccess('Updated Successfully');
  
     }
 
@@ -119,9 +119,9 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        //
-        $this->deleteFile($blog->image->url??null);
-        $blog->delete();
+        //delete model with Image
+        $this->deleteWithImage($blog);
+        //redirect back to blog list with success message
         return redirect()->route('blogs.index')->withSuccess('Deleted Successfully');
     }
 }

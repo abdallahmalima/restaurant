@@ -49,14 +49,18 @@ class FontPageController extends Controller
             'footer_sub'=>FooterSub::First(),
             'footer_contact'=>FooterContact::First(),
             'ssection_items'=>SsectionItem::all(),
-            'page_menu'=>PageTitleHeader::where('page_title_id',PageTitle::where('name','page_menu')->first()->id)->first(),
-            'page_gallery'=>PageTitleHeader::where('page_title_id',PageTitle::where('name','page_gallery')->first()->id)->first(),
-            'page_testimony'=>PageTitleHeader::where('page_title_id',PageTitle::where('name','page_testimony')->first()->id)->first(),
-            'page_team'=>PageTitleHeader::where('page_title_id',PageTitle::where('name','page_team')->first()->id)->first(),
-            'page_price'=>PageTitleHeader::where('page_title_id',PageTitle::where('name','page_price')->first()->id)->first(),
-            'page_blog'=>PageTitleHeader::where('page_title_id',PageTitle::where('name','page_blog')->first()->id)->first(),
-            'page_contact'=>PageTitleHeader::where('page_title_id',PageTitle::where('name','page_contact')->first()->id)->first(),
+            'page_menu'=>$this->getPageTittle('page_menu')->first(),
+            'page_gallery'=>$this->getPageTittle('page_gallery')->first(),
+            'page_testimony'=>$this->getPageTittle('page_testimony')->first(),
+            'page_team'=>$this->getPageTittle('page_team')->first(),
+            'page_price'=>$this->getPageTittle('page_price')->first(),
+            'page_blog'=>$this->getPageTittle('page_blog')->first(),
+            'page_contact'=>$this->getPageTittle('page_contact')->first(),
            
         ]);
+    }
+
+    private function getPageTittle($page_name){
+        return PageTitleHeader::where('page_title_id',PageTitle::where('name',$page_name)->first()->id);
     }
 }
