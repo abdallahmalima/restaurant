@@ -38,13 +38,14 @@ class FooterLinkController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $request->validate([
+        //validate inputs
+       $data= $request->validate([
           'name'=>'required|string|max:255',
           'url'=>'required|string|max:255',
         ]);
-
-        FooterLink::create($request->only('name','url'));
+        //store inputs
+        FooterLink::create($data);
+        //redirect back to create form
         return redirect()->route('footer_links.create')->withSuccess('Created Successfully');
     }
 
@@ -80,14 +81,14 @@ class FooterLinkController extends Controller
      */
     public function update(Request $request, FooterLink $footer_link)
     {
-        //
-        
-        $request->validate([
+        //validate inputs
+       $data= $request->validate([
             'name'=>'required|string|max:255',
             'url'=>'required|string|max:255',
           ]);
-
-        $footer_link->update($request->only('name','url'));
+         //store inputs
+        $footer_link->update($data);
+        //redirect back to edit form
         return redirect()->route('footer_links.edit',$footer_link)->with('footer_link',$footer_link)->withSuccess('Updated Successfully');
     }
 

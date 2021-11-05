@@ -75,8 +75,8 @@ class FooterContactController extends Controller
             'address' => ['required', 'string', 'max:255'],
             'phone1' => ['required', 'string', 'max:255'],
             'phone2' => ['required', 'string', 'max:255'],
-            'email1' => ['required', 'string', 'max:255'],
-            'email2' => ['required', 'string', 'max:255'],
+            'email1' => ['required', 'string', 'max:255','email'],
+            'email2' => ['required', 'string', 'max:255','email'],
         ]);
         $footer_contact=FooterContact::first();
         if($footer_contact){
@@ -84,7 +84,7 @@ class FooterContactController extends Controller
         }else{
             FooterContact::create($datas);
         }
-
+        //
         return redirect()->route('footer_contacts.edit')->withSuccess('Updated Successfully');
     }
 

@@ -71,14 +71,14 @@ class FooterDescController extends Controller
     public function update(Request $request)
     {
         //
-        $request->validate([
+       $data=$request->validate([
             'description' => ['required', 'string', 'max:255']
         ]);
         $footer_desc=FooterDesc::first();
         if($footer_desc){
-            $footer_desc->update(['description'=>$request->input('description')]);
+            $footer_desc->update($data);
         }else{
-            FooterDesc::create(['description'=>$request->input('description')]);
+            FooterDesc::create($data);
         }
 
         return redirect()->route('footer_descs.edit')->withSuccess('Updated Successfully');
