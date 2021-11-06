@@ -33,4 +33,13 @@ class Controller extends BaseController
     protected function storeImage($model){
         $model->image()->create(['url'=>request()->file('image')->store('images','public')]);
     }
+
+    protected function firstUpdateOrCreate($model,$data){
+        $model_var=$model::first();
+        if($model_var){
+            $model_var->update($data);
+        }else{
+            $model::create($data);
+        }
+    }
 }

@@ -47,12 +47,11 @@ class TeamController extends Controller
             'image' => ['required','image'],
         ]);
 
-       $inputs=$request->only('name','occupation');
-       $team=Team::create($inputs);
+        $team=Team::create($request->only('name','occupation'));
         if($request->hasFile('image')){
-           $team->image()->create(['url'=>$request->file('image')->store('images','public')]);
+         $this->storeImage($team);
         }
-        return redirect()->route('teams.create')->with('team',$team)->withSuccess('Created Successfuly');
+        return redirect()->route('teams.create')->withSuccess('Created Successfuly');
     }
 
     /**
@@ -94,19 +93,11 @@ class TeamController extends Controller
             'image' => ['image'],
         ]);
       
-        $inputs=$request->only('name','occupation');
-        $team->update($inputs);
+        $team->update($request->only('name','occupation'));
         
         if($request->hasFile('image')){
-            if($team->image){
-               $this->deleteFile($team->image->url??null);
-               $team->image()->update(['url'=>$request->file('image')->store('images','public')]);
-            }else{
-                $team->image()->create(['url'=>$request->file('image')->store('images','public')]);  
-            }
-           
+            $this->updateImage($team);
         }
-       
         return redirect()->route('teams.edit',$team)->with('team',$team)->withSuccess('Updated Successfuly');
  
     }
@@ -120,8 +111,7 @@ class TeamController extends Controller
     public function destroy(Team $team)
     {
         //
-        $this->deleteFile($team->image->url??null);
-        $team->delete();
+        $this->deleteWithImage($team);
         return redirect()->route('teams.index')->withSuccess('Deleted Successfuly');
     }
 }

@@ -47,12 +47,12 @@ class TestimonyController extends Controller
             'image' => ['required','image'],
         ]);
 
-        $inputs=$request->only('name','title','description');
-        $testimony=Testimony::create($inputs);
+      
+        $testimony=Testimony::create($request->only('name','title','description'));
         if($request->hasFile('image')){
-            $testimony->image()->create(['url'=>$request->file('image')->store('images','public')]);
+          $this->storeImage($testimony);
         }
-        return redirect()->route('testimonies.create')->with('testimony',$testimony)->withSuccess('Created Successfuly');
+        return redirect()->route('testimonies.create')->with('testimony',$testimony)->withSuccess('Created Successfully');
     }
 
     /**
@@ -95,20 +95,13 @@ class TestimonyController extends Controller
             'image' => [ 'image'],
         ]);
       
-        $inputs=$request->only('name','title','description');
-        $testimony->update($inputs);
+        $testimony->update($request->only('name','title','description'));
         
         if($request->hasFile('image')){
-            if($testimony->image){
-                $this->deleteFile($testimony->image->url??null);
-                $testimony->image()->update(['url'=>$request->file('image')->store('images','public')]);
-            }else{
-                $testimony->image()->create(['url'=>$request->file('image')->store('images','public')]);  
-            }
-           
+            $this->updateImage($testimony);
         }
        
-        return redirect()->route('testimonies.edit',$testimony)->with('testimony',$testimony)->withSuccess('Updated Successfuly');
+        return redirect()->route('testimonies.edit',$testimony)->with('testimony',$testimony)->withSuccess('Updated Successfully');
  
     }
 
@@ -121,8 +114,7 @@ class TestimonyController extends Controller
     public function destroy(Testimony $testimony)
     {
         //
-        $this->deleteFile($testimony->image->url??null);
-         $testimony->delete();
-        return redirect()->route('testimonies.index')->withSuccess('Deleted Successfuly');
+        $this->deleteWithImage($testimony);
+        return redirect()->route('testimonies.index')->withSuccess('Deleted Successfully');
     }
 }

@@ -53,7 +53,7 @@ class UserController extends Controller
         $inputs['password']=bcrypt($request->input('password'));
         $user=User::create($inputs);
         if($request->hasFile('image')){
-            $user->image()->create(['url'=>$request->file('image')->store('images','public')]);
+            $this->storeImage($user);
         }
         return redirect()->route('users.create')->with('user',$user)->withSuccess('Created Successfuly');
     }
@@ -104,17 +104,12 @@ class UserController extends Controller
         if($request->filled('password')){
             $inputs['password']=bcrypt($request->input('password'));
         }
-        
-        if($request->hasFile('image')){
-            if($user->image){
-                $this->deleteFile($user->image->url??null);
-                $user->image()->update(['url'=>$request->file('image')->store('images','public')]);
-            }else{
-                $user->image()->create(['url'=>$request->file('image')->store('images','public')]);
-            }
-           
-        }
+
         $user->update($inputs);
+        if($request->hasFile('image')){
+            $this->updateImage($user);
+        }
+       
         return redirect()->route('users.edit',$user)->with('user',$user)->withSuccess('Updated Successfuly');
     }
 
@@ -128,8 +123,7 @@ class UserController extends Controller
     {
         abort_if(!auth()->user()->is_admin || $user->is_admin,403);
        
-        $this->deleteFile($user->image->url??null);
-         $user->delete();
+        $this->deleteWithImage($user);
         return redirect()->route('users.index')->withSuccess('Deleted Successfuly');
     }
 }

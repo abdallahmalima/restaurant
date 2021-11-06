@@ -55,11 +55,11 @@ class PriceController extends Controller
        $inputs=$request->only('name','number','emails','disk','bandwith','sub_domains','domains');
        $price=Price::create($inputs);
         if($request->hasFile('image')){
-           $price->image()->create(['url'=>$request->file('image')->store('images','public')]);
+          $this->storeImage($price);
         }
        // User::find(1)->notify(new DataStoredNotification());
 
-        return redirect()->route('prices.create')->with('price',$price)->withSuccess('Created Successfuly');
+        return redirect()->route('prices.create')->with('price',$price)->withSuccess('Created Successfully');
     }
 
     /**
@@ -94,7 +94,7 @@ class PriceController extends Controller
      */
     public function update(Request $request, Price $price)
     {
-        //
+        //validate inputs
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'number' => ['required', 'integer'],
@@ -106,21 +106,15 @@ class PriceController extends Controller
             'image'=>['image']
            
         ]);
-      
+      //store inputs
         $inputs=$request->only('name','number','emails','disk','bandwith','sub_domains','domains');
         $price->update($inputs);
-        
+        //store image if exists
         if($request->hasFile('image')){
-         if($price->image){
-            $this->deleteFile($price->image->url??null);
-           $price->image()->update(['url'=>$request->file('image')->store('images','public')]);
-        }else{
-            $price->image()->create(['url'=>$request->file('image')->store('images','public')]);
+         $this->updateImage($price);
         }
-           
-        }
-       
-        return redirect()->route('prices.edit',$price)->with('price',$price)->withSuccess('Updated Successfuly');
+       //redirect back to edit form with success message
+        return redirect()->route('prices.edit',$price)->with('price',$price)->withSuccess('Updated Successfully');
  
     }
 
@@ -133,8 +127,7 @@ class PriceController extends Controller
     public function destroy(Price $price)
     {
         //
-        $this->deleteFile($price->image->url??null);
-        $price->delete();
+        $this->deleteWithImage($price);
         return redirect()->route('prices.index')->withSuccess('Deleted Successfuly');
     }
 }

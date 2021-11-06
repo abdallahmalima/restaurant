@@ -71,15 +71,10 @@ class FooterSubController extends Controller
     public function update(Request $request)
     {
         //
-        $request->validate([
+       $data= $request->validate([
             'description' => ['required', 'string', 'max:255']
         ]);
-        $footer_sub=FooterSub::first();
-        if($footer_sub){
-            $footer_sub->update(['description'=>$request->input('description')]);
-        }else{
-            FooterSub::create(['description'=>$request->input('description')]);
-        }
+        $this->firstUpdateOrCreate(FooterSub::class,$data);
 
         return redirect()->route('footer_subs.edit')->withSuccess('Updated Successfully');
     }

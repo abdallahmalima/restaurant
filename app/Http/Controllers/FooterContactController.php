@@ -71,19 +71,15 @@ class FooterContactController extends Controller
     public function update(Request $request)
     {
         //
-      $datas= $request->validate([
+      $data= $request->validate([
             'address' => ['required', 'string', 'max:255'],
             'phone1' => ['required', 'string', 'max:255'],
             'phone2' => ['required', 'string', 'max:255'],
             'email1' => ['required', 'string', 'max:255','email'],
             'email2' => ['required', 'string', 'max:255','email'],
         ]);
-        $footer_contact=FooterContact::first();
-        if($footer_contact){
-            $footer_contact->update($datas);
-        }else{
-            FooterContact::create($datas);
-        }
+        
+        $this->firstUpdateOrCreate(FooterContact::class,$data);
         //
         return redirect()->route('footer_contacts.edit')->withSuccess('Updated Successfully');
     }

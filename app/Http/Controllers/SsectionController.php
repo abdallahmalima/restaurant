@@ -50,7 +50,7 @@ class SsectionController extends Controller
         $inputs=$request->only('title','description');
         $ssection=Ssection::create($inputs);
         if($request->hasFile('image')){
-           $ssection->image()->create(['url'=>$request->file('image')->store('images','public')]);
+         $this->storeImage($ssection);
         }
         return redirect()->route('ssections.create')->with('ssection',$ssection)->withSuccess('Created Successfuly');
     }
@@ -87,26 +87,20 @@ class SsectionController extends Controller
      */
     public function update(Request $request, Ssection $ssection)
     {
-        //
+        //validate inputs
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:555'],
             'image' => [ 'image'],
         ]);
       
-        $inputs=$request->only('title','description');
-         $ssection->update($inputs);
-        
+        //store inputs
+         $ssection->update($request->only('title','description'));
+        //store image if exists
         if($request->hasFile('image')){
-            if($ssection->image){
-                $this->deleteFile($ssection->image->url??null);
-                $ssection->image()->update(['url'=>$request->file('image')->store('images','public')]);
-            }else{
-                $ssection->image()->create(['url'=>$request->file('image')->store('images','public')]); 
-            }
-           
+            $this->updateImage($ssection);
         }
-       
+       //redirect back to redit form with success message
         return redirect()->route('ssections.edit',$ssection)->with('ssection',$ssection)->withSuccess('Updated Successfuly');
  
     }
@@ -117,11 +111,10 @@ class SsectionController extends Controller
      * @param  \App\Models\Ssection $ssection
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ssection$ssection)
+    public function destroy(Ssection $ssection)
     {
         //
-        $this->deleteFile($ssection->image->url??null);
-        $ssection->delete();
+        $this->deleteWithImage($ssection);
         return redirect()->route('ssections.index')->withSuccess('Deleted Successfuly');
     }
 }
