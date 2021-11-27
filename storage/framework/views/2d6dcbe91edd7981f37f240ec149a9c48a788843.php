@@ -60,7 +60,7 @@
           <form action="<?php echo e(route('logout')); ?>" method="POST">
             <?php echo csrf_field(); ?>
             <button type="submit" href="#" class="dropdown-item">
-              <i class="fas fa-sign-out-alt mr-2"></i> Sign Outt
+              <i class="fas fa-sign-out-alt mr-2"></i> Sign Out
             </button>
           </form>
           
