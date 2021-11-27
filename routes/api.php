@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Http\Controllers\Api\AuthController;
+use App\Models\Crud;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,7 @@ Route::group(['middleware'=>'auth:sanctum','prefix'=>'v1'],function(){
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+});
+Route::get('/cruds', function (Request $request) {
+  return  response()->json(Crud::paginate(10),200);
 });

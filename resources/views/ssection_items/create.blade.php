@@ -47,7 +47,7 @@
                   </div>
                   <div class="form-group">
                     <label for="inputStatus">Second Section</label>
-                    <select name="ssection_id" class="form-control custom-select">
+                    <select name="ssection_id" class="form-control select2bs4" style="width: 100%;">
                       <option selected disabled>------Select Second Section------</option>
                       @foreach ($ssections as $ssection)
                         <option value="{{ $ssection->id }}">{{ $ssection->title }}</option>

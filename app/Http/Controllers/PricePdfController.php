@@ -18,6 +18,7 @@ class PricePdfController extends Controller
         //
         $prices=Price::all();
         $pdf=PDF::loadView('prices.pdf.index',compact('prices'));
+        
         return $pdf->stream('prices.pdf');
 
        // return $pdf->download('data.pdf');

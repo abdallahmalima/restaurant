@@ -54,6 +54,10 @@
                       <th style="width: 30%">
                           Email
                       </th>
+                    </th>
+                    <th style="width: 30%">
+                        Status
+                    </th>
                       <th style="width: 20%">
                         Actions
                       </th>
@@ -72,14 +76,28 @@
                             
                           {{$user->name}} 
                           </a>
+                          @if($user->last_seen)
+                          <br/>
+                          <small>
+                           last seen  <span class="badge badge-primary">{{Carbon\Carbon::parse($user->last_seen)->diffForHumans()}}  </span>
+                        </small>
+                        @endif
                          
                       </td>
                       <td>
                         {{Str::limit($user->email,19)}}
                       </td>
+                      <td>
+                        @if (Cache::has($user->id))
+                        <span class="badge badge-success">online</span>
+    
+                        @endif
+                      </td>
                       <td class="project-actions text-right">
                           
                           <form method="POST" action="{{route('users.destroy',$user) }}">
+                           
+                          
                             @if(auth()->user()->id ==$user->id)
                             <a class="btn btn-info btn-sm" href="{{route('users.edit',$user) }}">
                                <i class="fas fa-pencil-alt"></i>  

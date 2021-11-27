@@ -23,7 +23,7 @@ class MyLoginController extends Controller
         if(Auth::attempt($credentials,(Boolean)$request->remember)){
     
             $request->session()->regenerate();
-            return redirect()->route('cruds.index');
+            return redirect()->intended('cruds');
           
         }
 

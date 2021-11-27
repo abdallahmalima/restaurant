@@ -205,6 +205,15 @@
             </a>
           </li>
           <li class="nav-item has-treeview">
+            <a href="<?php echo e(route('messages.index')); ?>" class="nav-link <?php if(Route::is('messages.*')): ?> active <?php endif; ?>">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Message
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
             <a href="<?php echo e(route('ssections.index')); ?>" class="nav-link <?php if(Route::is('ssections.*')): ?> active <?php endif; ?>">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>

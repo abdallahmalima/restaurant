@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,7 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        if(!auth()->user()->is_admin){
+       
+        if(!Gate::allows('viewAny',User::class)){
             return view('users.edit',['user'=>auth()->user()]);
         }
       return  view('users.index',['users'=>User::paginate(3)]);
@@ -29,6 +31,7 @@ class UserController extends Controller
     public function create()
     {
         //
+        Gate::authorize('create',User::class);
        return view('users.create');
     }
 
@@ -40,7 +43,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-           abort_if(!auth()->user()->is_admin,403);
+          Gate::authorize('create',User::class);
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -77,7 +80,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        abort_if(auth()->user()->id !=$user->id,403);
+        Gate::authorize('update',$user);
         //
         return view('users.edit',compact('user'));
     }
@@ -91,7 +94,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-           abort_if(auth()->user()->id !=$user->id,403);
+        Gate::authorize('update',$user);
        
          $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -121,8 +124,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        abort_if(!auth()->user()->is_admin || $user->is_admin,403);
-       
+      //  abort_if(!auth()->user()->is_admin || $user->is_admin,403);
+        Gate::authorize('delete',$user);
         $this->deleteWithImage($user);
         return redirect()->route('users.index')->withSuccess('Deleted Successfuly');
     }

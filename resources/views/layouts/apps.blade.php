@@ -205,6 +205,15 @@
             </a>
           </li>
           <li class="nav-item has-treeview">
+            <a href="{{route('messages.index') }}" class="nav-link @if(Route::is('messages.*')) active @endif">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Message
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
             <a href="{{route('ssections.index') }}" class="nav-link @if(Route::is('ssections.*')) active @endif">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>

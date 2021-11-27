@@ -29,7 +29,7 @@
               <h3 class="card-title">Edit Crud</h3>
 
               <div class="card-tools">
-                <a href="{{route('users.index') }}" class="btn btn-tool">
+                <a href="{{route('cruds.index') }}" class="btn btn-tool">
                   <i class="fas fa-list"></i></a>
               </div>
             </div>

@@ -61,7 +61,7 @@ unset($__errorArgs, $__bag); ?>
                   </div>
                   <div class="form-group">
                     <label for="inputStatus">Second Section</label>
-                    <select name="ssection_id" class="form-control custom-select">
+                    <select name="ssection_id" class="form-control select2bs4" style="width: 100%;">
                       <option selected disabled>------Select Second Section------</option>
                       <?php $__currentLoopData = $ssections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ssection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option value="<?php echo e($ssection->id); ?>"><?php echo e($ssection->title); ?></option>

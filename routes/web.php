@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\MyLoginController;
 use App\Http\Controllers\FontPageController;
 use App\Http\Controllers\PrivateAccessController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+/*Route::get('/myf',function(){
+return response()->download(public_path('app/images/bg.png'));
+});*/
+Route::get('getCruds',function(){
+//$response=Http::get('http://127.0.0.1:8000/api/cruds');
+//dd($response->json());
+
+});
 
 Route::get('/', FontPageController::class);
 Route::resource('contacts',App\Http\Controllers\ContactController::class)->only('store');
@@ -48,6 +57,7 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('footer_links/search',[App\Http\Controllers\FooterLinkSearchController::class,'index'])->name('footer_links.search');
     Route::get('ssections/search',[App\Http\Controllers\SsectionSearchController::class,'index'])->name('ssections.search');
     Route::get('ssection_items/search',[App\Http\Controllers\SsectionItemSearchController::class,'index'])->name('ssection_items.search');
+    Route::get('messages/search',[App\Http\Controllers\MessageSearchController::class,'index'])->name('messages.search');
     Route::resource('users',App\Http\Controllers\UserController::class);
     Route::resource('fsections',App\Http\Controllers\FsectionController::class);
     Route::resource('blogs',App\Http\Controllers\BlogController::class);
@@ -60,6 +70,7 @@ Route::group(['middleware'=>'auth'],function(){
     Route::resource('menu_items',App\Http\Controllers\MenuItemController::class);
     Route::resource('galleries',App\Http\Controllers\GalleryController::class);
     Route::resource('contacts',App\Http\Controllers\ContactController::class)->only('index','show','destroy');
+    Route::resource('messages',App\Http\Controllers\MessageController::class)->except('edit','update');
     Route::resource('ssections',App\Http\Controllers\SsectionController::class);
     Route::resource('page_titles',App\Http\Controllers\PageTitleHeaderController::class);
     Route::resource('ssection_items',App\Http\Controllers\SsectionItemController::class);
