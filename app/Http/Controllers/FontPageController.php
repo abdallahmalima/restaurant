@@ -44,7 +44,7 @@ class FontPageController extends Controller
             'prices'=>Price::take(3)->get(),
             'fsections'=>Fsection::all(),
             'footer_links'=>FooterLink::all(),
-            'ssections'=>Ssection::take(1)->get(),
+            'ssections'=>Ssection::take(4)->get(),
             'footer_desc'=>FooterDesc::First(),
             'footer_sub'=>FooterSub::First(),
             'footer_contact'=>FooterContact::First(),
