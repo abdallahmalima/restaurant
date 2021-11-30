@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Price;
+use App\Models\User;
+use App\Notifications\DataStoredNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PriceController extends Controller
 {
@@ -57,7 +60,7 @@ class PriceController extends Controller
         if($request->hasFile('image')){
           $this->storeImage($price);
         }
-       // User::find(1)->notify(new DataStoredNotification());
+       
 
         return redirect()->route('prices.create')->with('price',$price)->withSuccess('Created Successfully');
     }
