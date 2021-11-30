@@ -77,6 +77,7 @@ Route::group(['middleware'=>'auth'],function(){
     Route::resource('page_titles',App\Http\Controllers\PageTitleHeaderController::class);
     Route::resource('ssection_items',App\Http\Controllers\SsectionItemController::class);
     Route::resource('footer_links',App\Http\Controllers\FooterLinkController::class);
+    Route::resource('food_menus',App\Http\Controllers\FoodMenuController::class);
     Route::get('logos/edit',[App\Http\Controllers\LogoController::class,'edit'])->name('logos.edit');
     Route::put('logos',[App\Http\Controllers\LogoController::class,'update'])->name('logos.update');
     Route::get('footer_descs/edit',[App\Http\Controllers\FooterDescController::class,'edit'])->name('footer_descs.edit');

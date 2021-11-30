@@ -160,6 +160,15 @@
             </a>
           </li>
           <li class="nav-item has-treeview">
+            <a href="{{route('food_menus.index') }}" class="nav-link @if(Route::is('food_menus.*')) active @endif">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Food Menu
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
             <a href="{{route('fsections.index') }}" class="nav-link @if(Route::is('fsections.*')) active @endif">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>

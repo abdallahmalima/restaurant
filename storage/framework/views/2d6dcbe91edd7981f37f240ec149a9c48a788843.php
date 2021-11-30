@@ -160,6 +160,15 @@
             </a>
           </li>
           <li class="nav-item has-treeview">
+            <a href="<?php echo e(route('food_menus.index')); ?>" class="nav-link <?php if(Route::is('food_menus.*')): ?> active <?php endif; ?>">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Food Menu
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
             <a href="<?php echo e(route('fsections.index')); ?>" class="nav-link <?php if(Route::is('fsections.*')): ?> active <?php endif; ?>">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
