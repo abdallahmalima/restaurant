@@ -10,6 +10,10 @@ class FoodMenu extends Model
     use HasFactory;
     protected $fillable=['name','description','price'];
 
+    protected $casts=[
+     'price'=>'decimal:1' 
+    ];
+
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');
