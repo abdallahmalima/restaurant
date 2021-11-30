@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class CategoryGalleryController extends Controller
 {
@@ -22,12 +23,12 @@ class CategoryGalleryController extends Controller
     public function store(Request $request,Category $category)
     {
         //validate inputs
-        $request->validate([
+        $data=$request->validate([
             'name' => ['required', 'string', 'max:255'],
             'image' => ['required','image'],
         ]);
         //store inputs
-         $gallery=$category->galleries()->create($request->only('name'));
+         $gallery=$category->galleries()->create($this->arr_except($data,['image']));
          //store image if exists
         if($request->hasFile('image')){
             $this->storeImage($gallery);

@@ -25,6 +25,8 @@ Route::get('getCruds',function(){
 
 });
 
+
+
 Route::get('/', FontPageController::class);
 Route::resource('contacts',App\Http\Controllers\ContactController::class)->only('store');
 //Auth::routes();

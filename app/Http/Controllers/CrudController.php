@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProssessApp;
 use App\Models\Crud;
 use Illuminate\Http\Request;
 use PDF;
@@ -82,6 +83,7 @@ class CrudController extends Controller
      */
     public function update(Request $request, Crud $crud)
     {
+     
         //validate inputs
         $request->validate([
             'title'=>'required|string|max:255',
@@ -89,6 +91,9 @@ class CrudController extends Controller
           ]);
         //store inputs
         $data=$crud->update($request->only('title','description'));
+
+
+        ProssessApp::dispatch();
         //redirect back to edit form with success message
         return redirect()->route('cruds.edit',$crud)->with('crud',$data)->withSuccess('Updated Successfully');
     }

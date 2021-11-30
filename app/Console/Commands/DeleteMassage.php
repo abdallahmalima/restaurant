@@ -38,8 +38,8 @@ class DeleteMassage extends Command
      */
     public function handle()
     {
-        $messages=DB::select('select * from messages limit 1');
-        DB::delete('delete from messages where id=?',[$messages[0]->id]);
+        $messageId=DB::table('messages')->first()->id;
+        $messages=DB::table('messages')->whereId($messageId)->delete();
         return Command::SUCCESS;
     }
 }

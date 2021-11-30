@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Arr;
 
 class Controller extends BaseController
 {
@@ -41,5 +42,8 @@ class Controller extends BaseController
         }else{
             $model::create($data);
         }
+    }
+    protected function arr_except($arr1,$arr2){
+        return Arr::except($arr1,$arr2);
     }
 }

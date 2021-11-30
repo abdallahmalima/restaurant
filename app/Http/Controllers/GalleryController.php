@@ -41,12 +41,12 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+       $data= $request->validate([
             'name' => ['required', 'string', 'max:255','unique:galleries,name'],
             'category_id'=>['required', 'integer','exists:categories,id'],
             'image' => ['required','image'],
         ]);
-        $gallery=Gallery::create($request->only('name','category_id'));
+        $gallery=Gallery::create($this->arr_except($data,['image']));
         if($request->hasFile('image')){
             $gallery->image()->create(['url'=>$request->file('image')->store('images','public')]);
          }

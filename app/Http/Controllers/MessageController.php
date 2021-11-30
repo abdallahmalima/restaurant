@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AppEvent;
 use App\Models\Message;
 use Illuminate\Http\Request;
 
@@ -83,7 +84,7 @@ class MessageController extends Controller
     public function update(Request $request, Message $message)
     {
         //
-
+         
     }
 
     /**
@@ -95,6 +96,7 @@ class MessageController extends Controller
     public function destroy(Message $message)
     {
         //
+        AppEvent::dispatch('AppEvent');
         $message->delete();
         return redirect()->route('messages.index')->withSuccess('Deleted Successfully');
     }

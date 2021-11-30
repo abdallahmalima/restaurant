@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class BlogController extends Controller
 {
@@ -16,7 +17,8 @@ class BlogController extends Controller
     public function index()
     {
       
-        return view('blogs.index',['blogs'=>Blog::paginate(3)]);
+        //return response()->json(Blog::paginate(3),200);
+         return view('blogs.index',['blogs'=>Blog::paginate(3)]);
     }
 
     /**
@@ -41,14 +43,14 @@ class BlogController extends Controller
     {
 
         //validate inputs
-        $request->validate([
+       $data= $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:555'],
             'image' => ['required','image'],
         ]);
         
        //store input without image
-        $blog=Blog::create($request->only('title','description'));
+        $blog=Blog::create($this->arr_except($data,['image']));
 
         //store image if input has image file
         if($request->hasFile('image')){
@@ -91,14 +93,14 @@ class BlogController extends Controller
     public function update(Request $request, Blog $blog)
     {
         //validate inputs
-        $request->validate([
+        $data=$request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
             'image' => [ 'image'],
         ]);
       
       //update inputs without image
-        $blog->update($request->only('title','description'));
+        $blog->update($this->arr_except($data,['image']));
         
         //update image if exists
         if($request->hasFile('image')){
